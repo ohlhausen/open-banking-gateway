@@ -1,4 +1,4 @@
-package de.adorsys.opba.restapi.shared;
+package de.adorsys.opba.api.security.domain;
 
 import lombok.experimental.UtilityClass;
 
@@ -16,17 +16,4 @@ public class HttpHeaders {
     public static final String X_REQUEST_SIGNATURE = "X-Request-Signature";
     public static final String FINTECH_ID = "fintech_id";
 
-    @UtilityClass
-    public class UserAgentContext {
-        public static final String PSU_IP_ADDRESS = "PSU-IP-Address";
-        public static final String PSU_IP_PORT = "PSU-IP-Port";
-        public static final String PSU_ACCEPT = "PSU-Accept";
-        public static final String PSU_ACCEPT_CHARSET = "PSU-Accept-Charset";
-        public static final String PSU_ACCEPT_ENCODING = "PSU-Accept-Encoding";
-        public static final String PSU_ACCEPT_LANGUAGE = "PSU-Accept-Language";
-        public static final String PSU_DEVICE_ID = "PSU-Device-ID";
-        public static final String PSU_USER_AGENT = "PSU-User-Agent";
-        public static final String PSU_GEO_LOCATION = "PSU-Geo-Location";
-        public static final String PSU_HTTP_METHOD = "PSU-Http-Method";
-    }
 }

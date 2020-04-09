@@ -34,7 +34,6 @@ public class AccountService extends HandleAcceptedService {
     @Autowired
     private RedirectHandlerService redirectHandlerService;
 
-
     public AccountService(AuthorizeService authorizeService, TppAisClient tppAisClient, FintechUiConfig uiConfig) {
         super(authorizeService);
         this.tppAisClient = tppAisClient;
@@ -67,15 +66,18 @@ public class AccountService extends HandleAcceptedService {
     }
 
     private ResponseEntity readOpbaResponse(String bankID, SessionEntity sessionEntity, String redirectCode) {
+        UUID xRequestId = UUID.fromString(restRequestContext.getRequestId());
         ResponseEntity accounts;
         if (null != sessionEntity.getServiceSessionId() && sessionEntity.getConsentConfirmed()) {
             accounts = tppAisClient.getAccounts(
-                    tppProperties.getFintechID(),
                     tppProperties.getServiceSessionPassword(),
                     sessionEntity.getLoginUserName(),
                     RedirectUrlsEntity.buildOkUrl(uiConfig, redirectCode),
                     RedirectUrlsEntity.buildNokUrl(uiConfig, redirectCode),
-                    UUID.fromString(restRequestContext.getRequestId()),
+                    xRequestId,
+                    null,
+                    null,
+                    null,
                     bankID,
                     sessionEntity.getPsuConsentSession(),
                     sessionEntity.getConsentConfirmed() ? sessionEntity.getServiceSessionId() : null);
@@ -85,20 +87,18 @@ public class AccountService extends HandleAcceptedService {
             // https://github.com/adorsys/open-banking-gateway/issues/303
             accounts = tppAisClient.getTransactions(
                     UUID.randomUUID().toString(), // As consent is missing this will be ignored
-                    tppProperties.getFintechID(),
                     tppProperties.getServiceSessionPassword(),
                     sessionEntity.getLoginUserName(),
                     RedirectUrlsEntity.buildOkUrl(uiConfig, redirectCode),
                     RedirectUrlsEntity.buildNokUrl(uiConfig, redirectCode),
-                    UUID.fromString(restRequestContext.getRequestId()),
+                    xRequestId,
+                    null,
+                    null,
+                    null,
                     bankID,
                     sessionEntity.getPsuConsentSession(),
-                    sessionEntity.getConsentConfirmed() ? sessionEntity.getServiceSessionId() : null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null);
+                    sessionEntity.getServiceSessionId(),
+                    null, null, null, null, null);
         }
         return accounts;
     }
