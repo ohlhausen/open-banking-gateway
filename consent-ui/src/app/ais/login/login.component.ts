@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { SessionService } from '../../common/session.service';
 import { AuthService } from '../../common/auth.service';
+import { ConsentSharingComponent } from '../entry-page/initiation/consent-sharing/consent-sharing.component';
 
 @Component({
   selector: 'consent-app-login',
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit {
         const xsrfToken = res.body.xsrfToken;
         this.sessionService.setXsrfToken(xsrfToken);
         // navigate to transactions
-        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['../' + ConsentSharingComponent.ROUTE], { relativeTo: this.activatedRoute });
       },
       error => {
         console.log(error);
