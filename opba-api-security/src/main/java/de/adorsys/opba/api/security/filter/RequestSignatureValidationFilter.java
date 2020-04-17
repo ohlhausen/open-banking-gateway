@@ -15,15 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @RequiredArgsConstructor
 public class RequestSignatureValidationFilter extends OncePerRequestFilter {
     private final RequestVerifyingService requestVerifyingService;
     private final Duration requestTimeLimit;
-    private final Map<String, String> fintechKeysMap;
+    private final ConcurrentHashMap<String, String> fintechKeysMap;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

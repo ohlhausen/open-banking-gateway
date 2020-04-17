@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import java.time.Duration;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Data
@@ -18,7 +18,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "fintech.verification")
 public class RequestVerifyingConfig {
     private Duration requestTimeLimit;
-    private Map<String, String> fintechKeys;
+    private ConcurrentHashMap<String, String> fintechKeys;
 
     @Bean
     public RequestSignatureValidationFilter requestSignatureValidationFilter(Environment environment) {
